@@ -14,18 +14,7 @@ int nLEDs = 22;
 int dataPin  = 4;
 int clockPin = 5;
 
-// First parameter is the number of LEDs in the strand.  The LED strips
-// are 32 LEDs per meter but you can extend or cut the strip.  Next two
-// parameters are SPI data and clock pins:
 LPD8806 strip = LPD8806(nLEDs, dataPin, clockPin);
-
-// You can optionally use hardware SPI for faster writes, just leave out
-// the data and clock pin parameters.  But this does limit use to very
-// specific pins on the Arduino.  For "classic" Arduinos (Uno, Duemilanove,
-// etc.), data = pin 11, clock = pin 13.  For Arduino Mega, data = pin 51,
-// clock = pin 52.  For 32u4 Breakout Board+ and Teensy, data = pin B2,
-// clock = pin B1.  For Leonardo, this can ONLY be done on the ICSP pins.
-//LPD8806 strip = LPD8806(nLEDs);
 
 //Setup the RedCycle object
   RedCycle redCycle(128/100, 0)
@@ -191,8 +180,6 @@ void shoot(uint8_t wait, uint8_t len) {
  delay(150);
 }
 
-// Slightly different, this one makes the rainbow wheel equally distributed 
-// along the chain
 void rainbowCycle(uint8_t wait) {
   uint16_t i, j;
   
