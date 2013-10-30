@@ -1,6 +1,8 @@
 #include "LPD8806.h"
 #include "SPI.h"
 
+#include <RedCycle.h>
+
 // Example to control LPD8806-based RGB LED Modules in a strip
 
 /*****************************************************************************/
@@ -25,8 +27,8 @@ LPD8806 strip = LPD8806(nLEDs, dataPin, clockPin);
 // clock = pin B1.  For Leonardo, this can ONLY be done on the ICSP pins.
 //LPD8806 strip = LPD8806(nLEDs);
 
-//initiate counter for redCycle loop
-int red_count = 0;
+//Setup the RedCycle object
+  RedCycle redCycle(128/100, 0)
 
 //setup stuff for longshoot loop
 uint16_t wait = 500;
@@ -49,36 +51,13 @@ void setup() {
 
 void loop() {
   int shootlen = 8;
-  boolean red_cycle = true;
-  
-  /* 
-  //ROBOT COMMANDS
-  //this is a controller for redCycle that can be stopped anytime
-  if(red_cycle == true) {
-    redCycle(red_count, 0);
-    red_count ++;
-  }
-  
-  else if(spinning_up == true && shooting == true) {
-    shoot(10, shootlen);
-  }
-  
-  else if(spinning_up == true) {
-    wheelspinup(25, shootlen);
-  }
-  
-  else {
-    for(int i=0; i<strip.numPixels(); i++) strip.setPixelColor(i, 0);
-    strip.show();
-  }
-  */
   
   //THIS IS A DEMO CYCLE
   //rainbowCycle(0);  // make it go through the cycle fairly fast
   
   //Run the redCycle loop 6 times
-  for(red_count = 0; red_count < 384 * 6; red_count += 128/110) {
-    redCycle(red_count, 0);
+  for(i = 0; i < 384 * 6; i++) {
+    redCycle.initialize();
   }
   
  
@@ -163,16 +142,6 @@ void longshootCycle(boolean at_speed, boolean is_shoot) {
   wait++;
   
   delay(4);  //delay should be 4 milliseconds
-}
-
-void redCycle(uint16_t j, uint8_t wait) {
-  uint16_t i;
-  
-  for (i=0; i < strip.numPixels(); i++) {
-    strip.setPixelColor(i, redWheel( ((i * 384 / strip.numPixels()) + j) % 384) );
-  }  
-  strip.show();   // write all the pixels out
-  delay(wait);
 }
 
 void wheelspinup(uint8_t wait, uint8_t len) {
