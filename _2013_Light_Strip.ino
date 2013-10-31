@@ -46,7 +46,7 @@ void loop() {
   
   //Run the redCycle loop 6 times
   for(i = 0; i < 384 * 6; i++) {
-    redCycle.initialize();
+    RedCycle.Initialize();
   }
   
  

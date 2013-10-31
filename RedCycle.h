@@ -9,9 +9,9 @@ class RedCycle
     void Initialize();
     void Run();
   private:
-    uint32_t redWheel();
     int red_count;
     int _rate;
+    int _wait;
 }
 
 #endif
